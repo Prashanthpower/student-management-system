@@ -184,3 +184,9 @@ This project was developed as a practical full-stack development project to gain
 
 ### MySQL Database
 ![MySQL Database](screenshots/database.png)
+
+## 🌐 Live Demo
+
+- **Frontend (Student Management System):** [Open Application](https://student-management-frontend-svvd.onrender.com)
+- **Backend API (Students):** [View Students API](https://student-management-system-1lff.onrender.com/api/students)
+
