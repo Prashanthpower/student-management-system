@@ -5,6 +5,7 @@ import com.studentmanagement.entity.Student;
 import com.studentmanagement.service.StudentService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = {
-    "http://localhost:5173",
-    "https://student-management-frontend-svwd.onrender.com"
-})
+@CrossOrigin(
+    origins = {
+        "http://localhost:5173",
+        "https://student-management-frontend-svvd.onrender.com"
+    },
+    allowedHeaders = "*",
+    methods = {
+        RequestMethod.GET,
+        RequestMethod.POST,
+        RequestMethod.PUT,
+        RequestMethod.DELETE,
+        RequestMethod.OPTIONS
+    }
+)
 public class StudentController {
 
     private final StudentService studentService;
