@@ -19,6 +19,11 @@ public class StudentService {
 
     // Create a new student
     public Student createStudent(Student student) {
+        if (studentRepository.existsByEmail(student.getEmail())) {
+            throw new DuplicateEmailException(
+                    "A student with this email already exists");
+        }
+
         return studentRepository.save(student);
     }
 
@@ -36,7 +41,13 @@ public class StudentService {
     public Student updateStudent(Long id, Student updatedStudent) {
         Student existingStudent = studentRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Student not found with ID: " + id));
+                        new StudentNotFoundException(
+                                "Student not found with ID: " + id));
+
+        if (studentRepository.existsByEmailAndIdNot(updatedStudent.getEmail(), id)) {
+            throw new DuplicateEmailException(
+                    "Another student already uses this email");
+        }
 
         existingStudent.setName(updatedStudent.getName());
         existingStudent.setEmail(updatedStudent.getEmail());
@@ -49,7 +60,8 @@ public class StudentService {
     // Delete a student
     public void deleteStudent(Long id) {
         if (!studentRepository.existsById(id)) {
-            throw new RuntimeException("Student not found with ID: " + id);
+            throw new StudentNotFoundException(
+                    "Student not found with ID: " + id);
         }
 
         studentRepository.deleteById(id);

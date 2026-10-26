@@ -4,7 +4,8 @@ package com.studentmanagement.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name = "students")
@@ -27,7 +28,8 @@ public class Student {
     @Column(nullable = false)
     private String department;
 
-    @PositiveOrZero(message = "Year must be zero or positive")
+    @Min(value = 1, message = "Academic year must be between 1 and 4")
+    @Max(value = 4, message = "Academic year must be between 1 and 4")
     private int year;
 
     public Student() {
