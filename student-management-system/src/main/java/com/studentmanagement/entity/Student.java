@@ -30,6 +30,7 @@ public class Student {
 
     @Min(value = 1, message = "Academic year must be between 1 and 4")
     @Max(value = 4, message = "Academic year must be between 1 and 4")
+    @Column(name = "\"year\"")
     private int year;
 
     public Student() {
@@ -71,11 +72,23 @@ public class Student {
         this.department = department;
     }
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     public int getYear() {
         return year;
     }
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

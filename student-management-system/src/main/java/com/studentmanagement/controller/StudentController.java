@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
 @RequestMapping("/api/students")
+@org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
 @CrossOrigin(
     origins = {
         "http://localhost:5173",
@@ -39,6 +40,7 @@ public class StudentController {
 
     // Create a student
     @PostMapping
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Student> createStudent(
             @Valid @RequestBody Student student) {
         Student savedStudent = studentService.createStudent(student);
@@ -61,6 +63,7 @@ public class StudentController {
 
     // Update a student
     @PutMapping("/{id}")
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Student> updateStudent(
             @PathVariable Long id,
             @Valid @RequestBody Student student) {
@@ -69,6 +72,7 @@ public class StudentController {
 
     // Delete a student
     @DeleteMapping("/{id}")
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();

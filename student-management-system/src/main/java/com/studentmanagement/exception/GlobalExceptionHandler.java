@@ -53,4 +53,36 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @ExceptionHandler(org.springframework.security.authentication.BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleBadCredentials(
+            org.springframework.security.authentication.BadCredentialsException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "INVALID_CREDENTIALS");
+        error.put("message", "Invalid username or password");
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAccessDenied(
+            org.springframework.security.access.AccessDeniedException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "FORBIDDEN");
+        error.put("message", "You do not have permission to access this resource");
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "BAD_REQUEST");
+        error.put("message", ex.getMessage());
+
+        return ResponseEntity.badRequest().body(error);
+    }
 }
